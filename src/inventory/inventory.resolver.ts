@@ -23,4 +23,13 @@ export class InventoryResolver {
         return this.inventoryService.createInventory(inventoryInput);
     }
 
+    @Query((returns) => Inventory)
+    getInventoryById(
+        @Args('_id') _id: string
+    ) {
+        return this.inventoryService.getInventoryById(_id);
+    }
+
+    
+
 }
