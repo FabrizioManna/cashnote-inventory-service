@@ -9,10 +9,10 @@ export class InventoryInput {
     @Field()
     description: string;
 
-    @Field()
+    @Field({ nullable: true })
     type?: TypeInventory;
 
-    @Field()
+    @Field({ nullable: true })
     category?: string;
 
     @Field()
@@ -21,6 +21,6 @@ export class InventoryInput {
     @Field()
     iva: string;
 
-    @Field()
+    @Field({ nullable: true })
     note?: string;
 }

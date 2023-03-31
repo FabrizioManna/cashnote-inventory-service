@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Inventory } from './entities/inventory.entity';
-import { FindManyOptions, FindOneOptions, Repository, Like } from 'typeorm';
+import { FindManyOptions, FindOneOptions, Repository, Like, Between } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InventoryInput } from './dto/inventory.input';
 import { InventoryInputFilter } from './dto/inventory-filter.input';
+import { InventoryInputUpdateData } from './dto/inventory-update.input';
 
 @Injectable()
 /**
@@ -68,7 +69,10 @@ export class InventoryService {
             options.where = {...options.where, um: inventoryInputFilter.um};
 
         if(inventoryInputFilter.active_status)
-            options.where = {...options.where, active_status: inventoryInputFilter.active_status};    
+            options.where = {...options.where, active_status: inventoryInputFilter.active_status};   
+        
+        if(inventoryInputFilter.init_date_int && inventoryInputFilter.end_date_int)
+            options.where = {...options.where, createdAt: Between(inventoryInputFilter.init_date_int, inventoryInputFilter.end_date_int) };    
             
         return await this.repositoryInventory.find(options);
     }
@@ -88,7 +92,6 @@ export class InventoryService {
         return await this.repositoryInventory.findOne(options);
     }
 
-
     /**
      * 
      *  Function createInventory
@@ -102,6 +105,46 @@ export class InventoryService {
     async createInventory(InventoryInput: InventoryInput): Promise<Inventory> {
         const inventory = this.repositoryInventory.create(InventoryInput);
         return await this.repositoryInventory.save(inventory);
+    }
+
+    /**
+     * 
+     *  Function updateInventory
+     *  function for update inventory data
+     *  
+     *  @param _id
+     *  @param InventoryInputUpdateData 
+     *  
+     *  @return Inventory
+     * 
+     */
+    async updateInventory(_id: string, updateInventoryData: InventoryInputUpdateData ): Promise<Inventory> {
+        await this.repositoryInventory.update(_id, updateInventoryData);
+        return this.repositoryInventory.findOne({ where: { _id } });
+    } 
+
+    /**
+     * 
+     *  Function deleteInventory 
+     *  for delete inventory from db
+     * 
+     *  @param _id
+     * 
+     *  @return boolean
+     * 
+     */
+    async deleteInventory(_id: string): Promise<boolean> {
+        const inventory = await this.repositoryInventory.findOne({ where: { _id } });
+
+        if(!inventory)
+            throw new Error(`Inventory with ID ${_id} not found`);
+
+        const result = await this.repositoryInventory.update(_id, {
+            active_status: false,
+            deleteAt: new Date().getTime(),
+        });
+
+        return result.affected > 0;
     }
 
 }

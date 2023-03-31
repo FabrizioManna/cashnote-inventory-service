@@ -2,10 +2,12 @@ import { Field, InputType } from '@nestjs/graphql';
 import { TypeInventory } from '../enums/type.enum';
 import { UnitMeasure } from '../enums/units-measures.enum';
 @InputType()
-export class InventoryInputFilter {
+export class InventoryInputUpdateData {
+    @Field({ nullable: true })
+    _id?: string;
 
     @Field({ nullable: true })
-    description: string;
+    description?: string;
 
     @Field({ nullable: true })
     type?: TypeInventory;
@@ -20,14 +22,6 @@ export class InventoryInputFilter {
     iva: string;
 
     @Field({ nullable: true })
-    note?: string;
+    note: string;
 
-    @Field({ nullable: true })
-    active_status?: boolean;
-
-    @Field({ nullable: true })
-    init_date_int?: Date;
-
-    @Field({ nullable: true })
-    end_date_int?: Date;
 }
