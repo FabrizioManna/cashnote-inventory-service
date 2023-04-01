@@ -141,7 +141,6 @@ export class InventoryService {
 
         const result = await this.repositoryInventory.update(_id, {
             active_status: false,
-            deleteAt: new Date().getTime(),
         });
 
         return result.affected > 0;

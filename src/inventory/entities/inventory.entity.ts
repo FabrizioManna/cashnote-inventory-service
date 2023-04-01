@@ -22,7 +22,7 @@ export class Inventory {
 
     @Column({ type: 'varchar', length: 50, nullable: true, default: null })
     @Field()
-    category: string;
+    category?: string;
 
     @Column({ type: 'varchar', length: 5 })
     @Field()
@@ -47,9 +47,5 @@ export class Inventory {
     @Column({ default: () => 'CURRENT_TIMESTAMP' })
     @Field()
     modifiedAt: Date;
-
-    @Column({ nullable: true, default: null })
-    @Field()
-    deleteAt: Date;
 
 }
