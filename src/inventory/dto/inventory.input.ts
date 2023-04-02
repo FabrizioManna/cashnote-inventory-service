@@ -18,8 +18,8 @@ export class InventoryInput {
     @Field()
     um: UnitMeasure;
 
-    @Field()
-    iva: string;
+    @Field({ nullable: true })
+    iva?: string;
 
     @Field({ nullable: true })
     note?: string;

@@ -20,21 +20,21 @@ export class Inventory {
     @Field()
     type: TypeInventory;
 
-    @Column({ type: 'varchar', length: 50, nullable: true, default: null })
+    @Column({ type: 'varchar', length: 50, default: '' })
     @Field()
-    category: string;
+    category?: string;
 
     @Column({ type: 'varchar', length: 5 })
     @Field()
     um: UnitMeasure;
 
-    @Column({ type: 'varchar', length: 5, nullable: true, default: null })
+    @Column({ type: 'varchar', length: 5, default: '' })
     @Field()
-    iva: string;
+    iva?: string;
 
-    @Column({ nullable: true, default: null })
+    @Column({ type: 'varchar', default: '' })
     @Field()
-    note: string;
+    note?: string;
 
     @Column({ default: true })
     @Field()
@@ -47,9 +47,5 @@ export class Inventory {
     @Column({ default: () => 'CURRENT_TIMESTAMP' })
     @Field()
     modifiedAt: Date;
-
-    @Column({ nullable: true, default: null })
-    @Field()
-    deleteAt: Date;
 
 }

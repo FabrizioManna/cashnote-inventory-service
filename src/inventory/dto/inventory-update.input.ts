@@ -16,12 +16,12 @@ export class InventoryInputUpdateData {
     category?: string;
 
     @Field({ nullable: true })
-    um: UnitMeasure;
+    um?: UnitMeasure;
 
     @Field({ nullable: true })
-    iva: string;
+    iva?: string;
 
     @Field({ nullable: true })
-    note: string;
+    note?: string;
 
 }
