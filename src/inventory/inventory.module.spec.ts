@@ -10,6 +10,7 @@ import { Inventory } from './entities/inventory.entity';
 import { TypeInventory } from './enums/type.enum';
 import { UnitMeasure } from './enums/units-measures.enum';
 import { faker } from '@faker-js/faker';
+import { async } from 'rxjs';
 
 describe('Test (e2e) Inventory Module', () => {
     let app: INestApplication;
@@ -130,6 +131,86 @@ describe('Test (e2e) Inventory Module', () => {
                     expect(res.body.data).toBeDefined();
                     expect(res.body.data.getAllInventorys.length).not.toBe(0);
                 });
+        });
+
+        it('Get Inventory By ID', async () => {
+            const getInventoryByIDMutation = `
+                query {
+                    getInventoryById(_id: "${createData._id}") {
+                        _id
+                        description
+                        type
+                        category
+                        um
+                        iva
+                        note
+                    }
+                }
+            `;
+
+            const response = await request(app.getHttpServer())
+                .post(entrypoint)
+                .send({ query: getInventoryByIDMutation })
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.errors).toBeFalsy();
+                    expect(res.body.data).toBeDefined();
+                    expect(res.body.data.getInventoryById).toMatchObject(createData);
+                });
+        });
+
+        it('Update Inventory Data', async () => {
+            
+            createData.description = faker.lorem.words(1);
+            createData.note = faker.lorem.words(30);
+            
+            const updateDataMutation = `
+                mutation {
+                    updateInventory(
+                        _id: "${createData._id}"
+                        updateInventoryData: {
+                            description: "${createData.description}"
+                            note: "${createData.note}"
+                        }
+                    ) {
+                        _id
+                        description
+                        type
+                        category
+                        um
+                        iva
+                        note
+                    }
+                }
+            `;
+
+            const response = await request(app.getHttpServer())
+                .post(entrypoint)
+                .send({ query: updateDataMutation })
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.errors).toBeFalsy();
+                    expect(res.body.data).toBeDefined();
+                    expect(res.body.data.updateInventory.length).not.toBe(0);
+                    expect(res.body.data.updateInventory).toMatchObject(createData);
+                });
+        });
+
+        it('Delete Inventory Data', async () => {
+            const deleteInventoryMutation = `
+                mutation {
+                    deleteInventory(_id: "${createData._id}")
+                }
+            `;
+
+            const response = await request(app.getHttpServer())
+                .post(entrypoint)
+                .send({ query: deleteInventoryMutation })
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.errors).toBeFalsy();
+                    expect(res.body.data.deleteInventory).toBe(true);
+                });  
         });
     });
 });
