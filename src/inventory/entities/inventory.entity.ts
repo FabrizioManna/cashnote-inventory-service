@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, PrimaryColumn, BeforeUpdate } from 'typeorm';
 import { UnitMeasure } from '../enums/units-measures.enum';
 import { TypeInventory } from '../enums/type.enum';
 @Entity()
@@ -40,11 +40,11 @@ export class Inventory {
     @Field()
     active_status: boolean;
 
-    @Column({ default: () => 'CURRENT_TIMESTAMP' })
+    @Column({ type: 'integer' })
     @Field()
     createdAt: Date;
 
-    @Column({ default: () => 'CURRENT_TIMESTAMP' })
+    @Column({ type: 'integer' })
     @Field()
     modifiedAt: Date;
 

@@ -24,4 +24,7 @@ export class InventoryInputUpdateData {
     @Field({ nullable: true })
     note?: string;
 
+    @Field({ nullable: true })
+    modifiedAt?: Date;
+
 }

@@ -103,7 +103,9 @@ export class InventoryService {
      * 
      */
     async createInventory(InventoryInput: InventoryInput): Promise<Inventory> {
-        const inventory = this.repositoryInventory.create(InventoryInput);
+        let inventory = this.repositoryInventory.create(InventoryInput);
+        inventory.createdAt = new Date(Date.now());
+        inventory.modifiedAt = new Date(Date.now());
         return await this.repositoryInventory.save(inventory);
     }
 
@@ -119,7 +121,9 @@ export class InventoryService {
      * 
      */
     async updateInventory(_id: string, updateInventoryData: InventoryInputUpdateData ): Promise<Inventory> {
-        await this.repositoryInventory.update(_id, updateInventoryData);
+        let data = updateInventoryData;
+        data.modifiedAt = new Date(Date.now());
+        await this.repositoryInventory.update(_id, data);
         return this.repositoryInventory.findOne({ where: { _id } });
     } 
 
@@ -141,6 +145,7 @@ export class InventoryService {
 
         const result = await this.repositoryInventory.update(_id, {
             active_status: false,
+            modifiedAt: new Date(Date.now())
         });
 
         return result.affected > 0;
