@@ -1,5 +1,5 @@
 # Welcome to the GraphQL API for managing Inventory!
-['Last Commit GitHub'](https://img.shields.io/github/last-commit/FabrizioManna/cashnote-service-inventory) ['Last Release'](https://img.shields.io/github/v/release/FabrizioManna/cashnote-service-inventory?include_prereleases) ['License'](https://img.shields.io/github/license/FabrizioManna/cashnote-service-inventory) <br>
+![Last Commit GitHub](https://img.shields.io/github/last-commit/FabrizioManna/cashnote-service-inventory) ![Last Release GitHub](https://img.shields.io/github/v/release/FabrizioManna/cashnote-service-inventory?include_prereleases) ![License](https://img.shields.io/github/license/FabrizioManna/cashnote-service-inventory) <br>
 
 I have created a microservice called Inventory, which is designed to provide a simple and efficient way to manage your assets and services. It is part of a larger project called Cashnote, which aims to provide a comprehensive suite of financial management tools. With Inventory, you can easily view and manage all of your assets and services in one place, allowing you to stay on top of your finances and make informed decisions. Whether you are a business owner, freelancer, or simply someone looking to better manage their finances, Inventory is the perfect tool for you. Written with <strong>NestJS</strong>
 
